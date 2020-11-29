@@ -39,10 +39,51 @@ def create_user():
     else:
         print("User created")
 
+def validIP(ip):
+    """
+    This function checks if an ip is valid or not
+    """
+    ip_slice = ip.split('.')
+    print(ip_slice)
+    for item in ip_slice:
+        if int(item) > 255:
+            return False
+    return True
+
+def isPingAble(ip):
+    """
+    This checks wether the ip is pingabe or not
+    returns true if pingable false otherwise
+    """
+    cmd = ['ping', '-c', '1', ip]
+    if subprocess.run(cmd).returncode == 0:
+        return True
+    return False
+
+def execAnother():
+    """
+    This function will allow to excute a remote command in another system
+    """
+    ip = input("Enter the remote ip:")
+    if not validIP(ip) and isPingAble(ip):
+        print("Error!!!\nWrong IP")
+    else:
+        cmd = input("Enter the command:")
+        output = subprocess.run(['ssh', ip, cmd])
+        if output.returncode == 0:
+            print("Command ran successfully")
+        else:
+            print("Command is unsucessfull")
+            print("Error code: ", output.returncode)
 
 if __name__ == "__main__":
     #run the functions for checking
-    webserver_status()
-    webserver_install()
-    yum_install()
-    create_user()
+    #to check a function uncomment and see if it works or not
+    #webserver_status()
+    #webserver_install()
+    #yum_install()
+    #create_user()
+    #print(validIP("192.168.43.178"))
+    #print(isPingAble('192.168.43.178'))
+    #execAnother()
+    pass
