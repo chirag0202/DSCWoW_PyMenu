@@ -2,7 +2,7 @@ import os
 import keyboard, string, random
 from playsound import playsound
 
-def keyboardPress(pressedKe):
+def keyboardPress(pressedKey):
     """
     function to play sound
     """
@@ -18,4 +18,4 @@ def keyboardPress(pressedKe):
         playsound(sound)
 
 if __name__ == "__main__":
-    keyboardPress()
+    keyboardPress('h')
