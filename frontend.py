@@ -4,7 +4,7 @@ This is the frontend of our menu program
 
 from colorama import init
 import termcolor as tc
-
+import play_sound as ps
 #initialise the colorama for use with termcolor
 init() 
 print(tc.colored("\t\t\t ***********************************", color='green', attrs=['blink']))
@@ -15,7 +15,11 @@ print(tc.colored(" *",color='green', attrs=['blink']))
 print(tc.colored("\t\t\t *                                 *",color='green', attrs=['blink']))
 print(tc.colored("\t\t\t ***********************************",color='green', attrs=['blink']))
 
-
+def playSound(key):
+    """
+    Play a sound when a key is pressed
+    """
+    ps.keyboardPress(key)
 def display_menu():
     """
     This function will display the menu to the user
@@ -33,7 +37,8 @@ def display_menu():
     10. exit
     '''
     print(tc.colored(menu, color='green', attrs=['bold']))
-
+    ch = input("Enter choice:")
+    playSound(ch)
 if __name__ == '__main__':
     #run the functions for checking
     display_menu()
