@@ -2,7 +2,7 @@ import os
 import keyboard, string, random
 from playsound import playsound
 
-def keyboardPress():
+def keyboardPress(pressedKe):
     """
     function to play sound
     """
@@ -14,9 +14,6 @@ def keyboardPress():
 
     #get path of sound
     sound = str("test_sound.mp3")
-
-    #get a key pressed
-    pressedKey = input('Press any key then ENTER: ')
     if pressedKey in letter or digit:
         playsound(sound)
 
