@@ -34,7 +34,11 @@ def display_menu():
     7.  create a directory
     8.  create a user
     9.  execute a command in another system
-    10. exit
+    10. Launch ec2-instance
+    11. Configure load balancer using haproxy
+    12. Setup hadoop master and worker nodes
+    13. Install docker on redhat
+    14. exit
     '''
     print(tc.colored(menu, color='green', attrs=['bold']))
     ch = input("Enter choice:")
