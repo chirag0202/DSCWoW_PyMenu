@@ -2,20 +2,51 @@
 This script contains some of the function codes
 '''
 import subprocess
+from colorama import init
+import termcolor as tc
 
+init()
+def date():
+    """
+    This function prints the date
+    """
+    output = subprocess.run("date")
+    output.stdout
+
+def calender():
+    """
+    This function prints the calender
+    """
+    output = subprocess.run('cal')
+    output.stdout
 def webserver_status():
     """
     This function checks the status of the webserver
     """
     output = subprocess.getoutput(cmd='systemctl status apache2 | grep active')
     print(output)
-
+def webserver_status_remote():
+    """
+    Checks status of webserver on remote ip
+    """
+    ip = input(tc.colored("Enter remote ip: ", 'green', attrs=['bold']))
+    output = subprocess.run(['ssh' ,ip, 'systemctl', 'status', 'httpd', '| grep' ,'active'])
+    output.stdout
 def webserver_install():
     '''
     This function will install webserver in the machine
     '''
     output = subprocess.run(['yum', 'install', 'httpd', '-y'])
     print(output)
+def webserver_install_remote(ip):
+    """
+    Install webserver on remote ip
+    """
+    output = subprocess.run(['ssh', ip, 'yum', 'install', 'httpd', '-y', '&&', 'systemctl', 'start', 'httpd'], capture_output=True)
+    if output.returncode == 1:
+        print("httpd not installed")
+    else:
+        print("httpd installation successful")
 def yum_install():
     """
     This package will ask for a package name and install it
@@ -30,7 +61,7 @@ def create_user():
     """
     This function will create a new user
     """
-    username= input("Enter username:")
+    username = input("Enter username:")
     passwd = input("Enter the password:")
     output = subprocess.run(['useradd', username])
     subprocess.run(['passwd', passwd])
