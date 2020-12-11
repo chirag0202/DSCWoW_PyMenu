@@ -47,16 +47,23 @@ def webserver_install_remote(ip):
         print("httpd not installed")
     else:
         print("httpd installation successful")
-def yum_install():
+def install_pkg():
     """
-    This package will ask for a package name and install it
+    This function will ask for a package name and install it
     """
+    host = input(tc.colored("Enter remote ip(leave blank for localhost): ", color='green', attrs=['bold']))
+    passwd = input(tc.colored("Enter root password: ", color='green', attrs=['bold']))
     pkg_name = input("Enter package name:")
-    output = subprocess.run(['yum', 'install', pkg_name, '-y'], capture_output=True)
-    if output.returncode == 1:
-        print("{0} not installed".format(pkg_name))
-    else:
-        print("{0} installation successful".format(pkg_name))
+    pkg_state = input("Enter package state(present/absent): ")
+    hosts_file = "[packs]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
+    with open("playbooks/install package/hosts", 'w') as file:
+        file.write(hosts_file)
+    with open('playbooks/install package/pkg_name.yml', 'w') as var_file:
+        var_file.writelines("pkg_name: {0}".format(pkg_name))
+        var_file.writelines("\n")
+        var_file.writelines("pkg_state: {0}".format(pkg_state))
+    
+    output = subprocess.run(['ansible-playbook', 'playbooks/install package/pkg.yml', '-i', 'playbooks/install package/hosts'])
 def create_user():
     """
     This function will create a new user

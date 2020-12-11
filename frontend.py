@@ -29,13 +29,13 @@ def display_menu():
     1.  print date
     2.  print calender
     3.  check webserver status
-    4. install webserver
-    5.  install a package using yum
+    4.  install webserver
+    5.  install a package
     6.  configure yum
     7.  check hadoop status
     8.  create a directory
     9.  create a user
-    10.  execute a command in another system
+    10. execute a command in another system
     11. Launch ec2-instance
     12. Configure load balancer using haproxy
     13. Setup hadoop master and worker nodes
@@ -68,5 +68,7 @@ if __name__ == '__main__':
             else:
                 ip = input(tc.colored("Enter remote ip: ", 'green', attrs=['bold']))
                 sf.webserver_install_remote(ip)
+        elif ch == '5':
+            sf.install_pkg()
         else:
             break

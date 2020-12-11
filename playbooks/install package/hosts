@@ -1,0 +1,2 @@
+[packs]
+192.168.29.107 ansible_connection=ssh ansible_user=root ansible_password=saptarsi22
