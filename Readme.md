@@ -31,7 +31,7 @@ The user has to select the task of choice from the list and give the prompted in
 
 Let's have a quick glance to the frontend of the program...
 
-<img src="file:///C:/Users/saran/OneDrive/Desktop/Sappy%20docs/1.jpeg" height="300" width="300">
+<img src="https://raw.githubusercontent.com/SaranyaChattopadhyay/Flutter-pictures/master/1.jpeg" height="400" width="600">
 
 ## Demo
 As the demo, a powerpoint presentation describing the basics of the project along with a demo-video on the working prototype have been uploaded. Do have a look on them!
