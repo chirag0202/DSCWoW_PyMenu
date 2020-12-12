@@ -1,35 +1,26 @@
 '''
 This is the frontend of our menu program
 '''
-<<<<<<< HEAD
 
 from colorama import init
 import termcolor as tc
 
-=======
 #importing packages
 from colorama import init
 import termcolor as tc
 import someFunctions as sf
->>>>>>> saptarsi
 #initialise the colorama for use with termcolor
 init() 
 print(tc.colored("\t\t\t ***********************************", color='green', attrs=['blink']))
 print(tc.colored("\t\t\t *                                 *",color='green', attrs=['blink']))
 print(tc.colored("\t\t\t * ",color='green', attrs=['blink']), end='')
-<<<<<<< HEAD
 print(tc.colored(" Radioactive", "green", on_color='on_white',attrs=['bold',]),end='')
-=======
 print(tc.colored(" Welcome To Sappy's python menu", "green", on_color='on_white',attrs=['bold',]),end='')
->>>>>>> saptarsi
 print(tc.colored(" *",color='green', attrs=['blink']))
 print(tc.colored("\t\t\t *                                 *",color='green', attrs=['blink']))
 print(tc.colored("\t\t\t ***********************************",color='green', attrs=['blink']))
 
-<<<<<<< HEAD
 
-=======
->>>>>>> saptarsi
 def display_menu():
     """
     This function will display the menu to the user
@@ -38,25 +29,6 @@ def display_menu():
     1.  print date
     2.  print calender
     3.  check webserver status
-<<<<<<< HEAD
-    4.  install a package using yum
-    5.  configure yum
-    6.  check hadoop status
-    7.  create a directory
-    8.  create a user
-    9.  execute a command in another system
-    10. Launch ec2-instance
-    11. Configure load balancer using haproxy
-    12. Setup hadoop master and worker nodes
-    13. Install docker on redhat
-    14. exit
-    '''
-    print(tc.colored(menu, color='green', attrs=['bold']))
-
-if __name__ == '__main__':
-    #run the functions for checking
-    display_menu()
-=======
     4.  install webserver
     5.  install a package
     6.  start, stop or reload a service
@@ -103,4 +75,3 @@ if __name__ == '__main__':
             sf.service()
         else:
             break
->>>>>>> saptarsi
