@@ -2,13 +2,10 @@
 This script contains some of the function codes
 '''
 import subprocess
-<<<<<<< HEAD
-=======
 from colorama import init
 import termcolor as tc
 
 init()
->>>>>>> saptarsi
 
 def haproxy():
     """
@@ -37,18 +34,6 @@ def webserver_install():
     '''
     output = subprocess.run(['yum', 'install', 'httpd', '-y'])
     print(output)
-<<<<<<< HEAD
-def yum_install():
-    """
-    This package will ask for a package name and install it
-    """
-    pkg_name = input("Enter package name:")
-    output = subprocess.run(['yum', 'install', pkg_name, '-y'], capture_output=True)
-    if output.returncode == 1:
-        print("{0} not installed".format(pkg_name))
-    else:
-        print("{0} installation successful".format(pkg_name))
-=======
 
 def date():
     """
@@ -122,7 +107,6 @@ def service():
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
         print(tc.colored("Task not completed successfully", color='green', attrs=['bold']))
->>>>>>> saptarsi
 def create_user():
     """
     This function will create a new user
