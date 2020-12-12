@@ -11,14 +11,14 @@ import termcolor as tc
 import someFunctions as sf
 #initialise the colorama for use with termcolor
 init() 
-print(tc.colored("\t\t\t ***********************************", color='green', attrs=['blink']))
-print(tc.colored("\t\t\t *                                 *",color='green', attrs=['blink']))
+print(tc.colored("\t\t\t ***************************************", color='green', attrs=['blink']))
+print(tc.colored("\t\t\t *                                     *",color='green', attrs=['blink']))
 print(tc.colored("\t\t\t * ",color='green', attrs=['blink']), end='')
-print(tc.colored(" Radioactive", "green", on_color='on_white',attrs=['bold',]),end='')
-print(tc.colored(" Welcome To Sappy's python menu", "green", on_color='on_white',attrs=['bold',]),end='')
+print(tc.colored(" ", "green", on_color='on_white',attrs=['bold',]),end='')
+print(tc.colored("Welcome To Radioactive python menu", "green", on_color='on_white',attrs=['bold',]),end='')
 print(tc.colored(" *",color='green', attrs=['blink']))
-print(tc.colored("\t\t\t *                                 *",color='green', attrs=['blink']))
-print(tc.colored("\t\t\t ***********************************",color='green', attrs=['blink']))
+print(tc.colored("\t\t\t *                                     *",color='green', attrs=['blink']))
+print(tc.colored("\t\t\t ***************************************",color='green', attrs=['blink']))
 
 
 def display_menu():

@@ -230,7 +230,6 @@ def launch_ec2_instance():
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
         print(tc.colored("Task failed!!!", color='red', attrs=['bold']))
-    subprocess.run(['rm', '-f', '~/{0}.pem'.format(key_name)])
 if __name__ == "__main__":
     #run the functions for checking
     #to check a function uncomment and see if it works or not
