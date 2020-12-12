@@ -46,7 +46,7 @@ The program at work...
 A powerpoint presentation describing the basics of the project along with a demo-video on the working prototype have been uploaded. Do have a look on them!
 
 ## Contributions
-This project is completely an open-source one and has ample of opportunities of tweak. We can add more functionalities, as well as append the use of newer technologies. So, pull requests are always welcome to this repository. However, it is appreciable if you open an issue forst and discuss what all changes you want to commit.
+This project is completely an open-source one and has ample of opportunities of tweak. We can add more functionalities, as well as append the use of newer technologies. So, pull requests are always welcome to this repository. However, it is appreciable if you can open an issue first and discuss what all changes you want to commit.
 
 Do make sure to test your changes beforehand. 
 
