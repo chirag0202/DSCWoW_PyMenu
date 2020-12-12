@@ -30,8 +30,8 @@ The program has a simple python menu-based UI in which the list of available opt
 The user has to select the task of choice from the list and give the prompted inputs as required. Some hitting of enters are enough for the task to be done!
 
 Let's have a quick glance to the frontend of the program...
-<img src=C:\Users\saran\OneDrive\Desktop\Sappy docs\1.jpeg height="300" width="300">
 
-<img src=C:\Users\saran\OneDrive\Desktop\Sappy docs\2.jpeg height="300" width="300">
+<img src="file:///C:/Users/saran/OneDrive/Desktop/Sappy%20docs/1.jpeg" height="300" width="300">
+
 ## Demo
 As the demo, a powerpoint presentation describing the basics of the project along with a demo-video on the working prototype have been uploaded. Do have a look on them!
