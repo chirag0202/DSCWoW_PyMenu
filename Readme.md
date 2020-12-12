@@ -1,7 +1,9 @@
 <<<<<<< HEAD
 # Python Menu
 =======
-#Python Menu
+#PyMenu
 >>>>>>> saptarsi
+>>>>>>> chirag
+>>>>>>> saranya
 
-This repository contains the simple code for simple python menu 
+This repository contains the simple code for simple python menu designed for dsc wow
