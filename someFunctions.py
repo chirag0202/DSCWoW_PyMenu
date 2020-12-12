@@ -230,6 +230,28 @@ def launch_ec2_instance():
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
         print(tc.colored("Task failed!!!", color='red', attrs=['bold']))
+
+def yum_config():
+    """
+    This module does the basoc configuration of yum
+    """
+    host = input(tc.colored("Enter remote ip(leave blank for localhost): ", color='green', attrs=['bold']))
+    passwd = input(tc.colored("Enter root password: ", color='green', attrs=['bold']))
+    hosts_file = "[config_yum]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
+    with open('playbooks/roles/yum config/hosts', 'w') as file:
+        file.write(hosts_file)
+    yum_name = input(tc.colored("Enter repo name: ",color='green', attrs=['bold']))
+    yum_state = input(tc.colored("Enter repo state(present/absent): ",color='green', attrs=['bold']))
+    yum_baseurl = input(tc.colored("Enter baseurl: ",color='green', attrs=['bold']))
+    with open('playbooks/roles/yum config/yum_var.yml', 'w') as file:
+        file.writelines("yum_name: {0}\n".format(yum_name))
+        file.writelines("yum_state: {0}\n".format(yum_state))
+        file.writelines("yum_baseurl: {0}\n".format(yum_baseurl))
+    output = subprocess.run(['ansible-playbook', 'playbooks/roles/yum config/yum_config.yml', '-i', 'playbooks/roles/yum config/hosts'])
+    if output.returncode == 0:
+        print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
+    else:
+        print(tc.colored("Task failed!!!", color='red', attrs=['bold']))
 if __name__ == "__main__":
     #run the functions for checking
     #to check a function uncomment and see if it works or not
