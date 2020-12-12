@@ -1,0 +1,2 @@
+pkg_name: httpd
+pkg_state: present

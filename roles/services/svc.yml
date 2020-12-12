@@ -1,0 +1,12 @@
+---
+- name: Start, stop or restart services
+  hosts: svcs
+  become: yes
+  vars_files:
+  - svcs_name.yml
+  tasks:
+  - meta: refresh_inventory
+  - service:
+      name: "{{ svc_name  }}"
+      enabled: "{{ svc_enable  }}"
+      state: "{{ svc_state }}"
