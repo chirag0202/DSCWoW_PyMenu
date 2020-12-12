@@ -86,7 +86,7 @@ def install_pkg():
     """
     This function will ask for a package name and install it
     """
-    host = input(tc.colored("Enter remote ip(leave blank for localhost): ", color='green', attrs=['bold']))
+    host = input(tc.colored("Enter remote ip: ", color='green', attrs=['bold']))
     passwd = gp.getpass(tc.colored("Enter root password: ", color='green', attrs=['bold']))
     pkg_name = input(tc.colored("Enter package name: ", color='green', attrs=['bold']))
     pkg_state = input(tc.colored("Enter package state(present/absent): ", color='green', attrs=['bold']))
@@ -108,7 +108,7 @@ def service():
     """
     This function start, stop or restarts a service
     """
-    host = input(tc.colored("Enter remote ip(leave blank for localhost): ", color='green', attrs=['bold']))
+    host = input(tc.colored("Enter remote ip: ", color='green', attrs=['bold']))
     passwd = gp.getpass(tc.colored("Enter root password: ", color='green', attrs=['bold']))
     svc_name = input(tc.colored("Enter service name: ", color='green', attrs=['bold']))
     svc_state= input(tc.colored("Enter service state(started/stopped/restarted): ", color='green', attrs=['bold']))
@@ -130,7 +130,7 @@ def create_user():
     """
     This function will create a new user
     """
-    host = input(tc.colored("Enter remote ip(leave blank for localhost): ", color='green', attrs=['bold']))
+    host = input(tc.colored("Enter remote ip: ", color='green', attrs=['bold']))
     passwd = gp.getpass(tc.colored("Enter root password: ", color='green', attrs=['bold']))
     hosts_file = "[usr]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
     username= input(tc.colored("Enter username: ", color='green', attrs=['bold']))
@@ -189,7 +189,7 @@ def create_dir():
     """
     This function creates a directory
     """
-    host = input(tc.colored("Enter remote ip(leave blank for localhost): ", color='green', attrs=['bold']))
+    host = input(tc.colored("Enter remote ip: ", color='green', attrs=['bold']))
     passwd = gp.getpass(tc.colored("Enter root password: ", color='green', attrs=['bold']))
     hosts_file = "[dir]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
     with open('playbooks/roles/directory/hosts', 'w') as file:
@@ -236,7 +236,7 @@ def yum_config():
     """
     This module does the basoc configuration of yum
     """
-    host = input(tc.colored("Enter remote ip(leave blank for localhost): ", color='green', attrs=['bold']))
+    host = input(tc.colored("Enter remote ip: ", color='green', attrs=['bold']))
     passwd = gp.getpass(tc.colored("Enter root password: ", color='green', attrs=['bold']))
     hosts_file = "[config_yum]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
     with open('playbooks/roles/yum config/hosts', 'w') as file:
