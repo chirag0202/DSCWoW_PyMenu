@@ -4,7 +4,7 @@ This script contains some of the function codes
 import subprocess
 from colorama import init
 import termcolor as tc
-
+from shutil import copyfile
 init()
 
 def haproxy():
@@ -48,6 +48,7 @@ def calender():
     """
     output = subprocess.run('cal')
     output.stdout
+
 def webserver_status_remote():
     """
     Checks status of webserver on remote ip
@@ -55,6 +56,7 @@ def webserver_status_remote():
     ip = input(tc.colored("Enter remote ip: ", 'green', attrs=['bold']))
     output = subprocess.run(['ssh' ,f'root@{ip}', 'systemctl', 'status', 'httpd', '| grep' ,'active'])
     output.stdout
+
 def webserver_install_remote(ip):
     """
     Install webserver on remote ip
@@ -64,6 +66,7 @@ def webserver_install_remote(ip):
         print("httpd not installed")
     else:
         print("httpd installation successful")
+
 def install_pkg():
     """
     This function will ask for a package name and install it
@@ -107,6 +110,7 @@ def service():
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
         print(tc.colored("Task failed!!!", color='red', attrs=['bold']))
+
 def create_user():
     """
     This function will create a new user
@@ -128,6 +132,7 @@ def create_user():
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
         print(tc.colored("Task failed!!!", color='red', attrs=['bold']))
+
 def validIP(ip):
     """
     This function checks if an ip is valid or not
@@ -164,6 +169,7 @@ def execAnother():
         else:
             print("Command is unsucessfull")
             print("Error code: ", output.returncode)
+
 def create_dir():
     """
     This function creates a directory
@@ -186,7 +192,31 @@ def create_dir():
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
         print(tc.colored("Task failed!!!", color='red', attrs=['bold']))
-        
+
+def launch_ec2_instance():
+    """
+    This function launches ec2-instance
+    """
+    message = '''
+    Please provide your access key and sceret key in a file called keys.yml in the format
+    access_key: your_access_key
+    secret_key: your_secret_key
+    also provide your key file in the same folder
+    press enter after you have done it.
+    '''
+    print(tc.colored(message, color='green', attrs=['bold']))
+    input()
+    key_name = input(tc.colored("Enter your ec2-instance key name: ", color='green', attrs=['bold']))
+    copyfile('{0}.pem'.format(key_name), 'playbooks/roles/ec2-instance/{0}.pem'.format(key_name))
+    subprocess.run(['chmod', '400', 'playbooks/roles/ec2-instance/{0}.pem'.format(key_name)])
+    subprocess.run(['cp', 'keys.yml', 'playbooks/roles/ec2-instance/'])
+    subprocess.run(['cp', 'index.html', 'playbooks/roles/ec2-instance/'])
+    output = subprocess.run(['ansible-playbook', 'playbooks/roles/ec2-instance/aws-webserver.yml', '-i', 'playbooks/roles/ec2-instance/hosts', '--private-key', 'playbooks/roles/ec2-instance/{0}.pem'.format(key_name)])
+    if output.returncode == 0:
+        print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
+    else:
+        print(tc.colored("Task failed!!!", color='red', attrs=['bold']))
+    subprocess.run(['rm', '-f', '~/{0}.pem'.format(key_name)])
 if __name__ == "__main__":
     #run the functions for checking
     #to check a function uncomment and see if it works or not
@@ -197,4 +227,5 @@ if __name__ == "__main__":
     #print(validIP("192.168.43.178"))
     #print(isPingAble('192.168.43.178'))
     #execAnother()
+    #launch_ec2_instance()
     pass
