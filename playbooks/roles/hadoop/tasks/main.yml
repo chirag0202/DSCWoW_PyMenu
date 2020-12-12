@@ -2,7 +2,7 @@
 # tasks file for hadoop
 - name: Creates directory
   file:
-    path: /root/hadoop
+    path: ./hadoop
     state: directory
 
 - name: Get jdk
@@ -13,7 +13,7 @@
 - name: Get hadoop
   get_url:
           url: https://archive.apache.org/dist/hadoop/common/hadoop-1.2.1/hadoop-1.2.1-1.x86_64.rpm
-          dest: /root/hadoop
+          dest: ./hadoop
           mode: '0666'
 
 - name: Install JDK
@@ -22,7 +22,7 @@
 
 - name: Install Hadoop
   command:
-          cmd: "rpm -ivf /root/hadoop/hadoop-1.2.1-1.x86_64.rpm --force"
+          cmd:  "rpm -ivf /root/hadoop/hadoop-1.2.1-1.x86_64.rpm --force"
 
 - name: Firewall
   firewalld:
@@ -32,14 +32,14 @@
 
 - name: Creates directory
   file:
-    path: /dn
+    path: /nn
     state: directory
 
 - name: Configure hadoop
   template:
           src: "hdfs-site.xml.j2"
           dest: /etc/hadoop/hdfs-site.xml
-          mode: '0666' 
+          mode: '0666'
 
 - name: Configure hadoop
   template:
@@ -49,5 +49,9 @@
 
 - name: File system
   command:
-          cmd: "hadoop-daemon.sh start datanode"
+          cmd: "hadoop namenode -format -force"
+
+- name: File system
+  command:
+          cmd: "hadoop-daemon.sh start namenode"
 
