@@ -33,14 +33,13 @@ def display_menu():
     5.  install a package
     6.  start, stop or reload a service
     7.  configure yum
-    8.  check hadoop status
-    9.  create a directory
-    10. create a user
-    11. Launch ec2-instance and configure webserver on top of it
-    12. Configure load balancer using haproxy
-    13. Setup hadoop master and worker nodes
-    14. Install docker on redhat
-    15. exit
+    8.  create a directory
+    9.  create a user
+    10. Launch ec2-instance and configure webserver on top of it
+    11. Configure load balancer using haproxy
+    12. Setup hadoop master and worker nodes
+    13. Install docker on redhat
+    14. exit
     '''
     print(tc.colored(menu, color='green', attrs=['bold']))
 if __name__ == '__main__':
@@ -74,13 +73,13 @@ if __name__ == '__main__':
             sf.service()
         elif ch == '7':
             sf.yum_config()
-        elif ch == '9':
+        elif ch == '8':
             sf.create_dir()
-        elif ch == '10':
+        elif ch == '9':
             sf.create_user()
-        elif ch == '12':
+        elif ch == '10':
             sf.launch_ec2_instance()
-        elif ch == '14':
+        elif ch == '12':
             sf.hadoop()
         else:
             break
