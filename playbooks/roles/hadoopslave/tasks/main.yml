@@ -6,13 +6,9 @@
     state: directory
 
 - name: Get jdk
-  get_url:
-          url: http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.rpm 
-          dest: /root/hadoop
-          mode: '0666'
-          validate_certs: no
-          headers:
-                 Cookie: oraclelicense=accept-securebackup-cookie
+  copy:
+          src: ./jdk-8u171-linux-x64.rpm
+          dest: ./hadoop/
 
 - name: Get hadoop
   get_url:
@@ -52,5 +48,5 @@
 
 - name: File system
   command:
-          cmd: "/etc/hadoop/hadoop-daemon.sh start datanode"
+          cmd: "hadoop-daemon.sh start datanode"
 
