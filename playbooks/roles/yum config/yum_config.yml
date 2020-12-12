@@ -1,0 +1,51 @@
+- name: configure yum
+  hosts: config_yum
+  become: yes
+  vars_files:
+  - yum_var.yml
+  tasks:
+  - name: refresh inventory
+    meta: refresh_inventory
+  - name: create /dvd folder
+    file:
+      path: /dvd
+      state: directory
+  - name: mount iso
+    mount:
+      state: mounted
+      path: /dvd
+      src: /dev/cdrom
+      boot: yes
+      fstype: iso9660
+  - name: Appstream repo
+    yum_repository:
+      name: AppStream
+      description: "AppStream repo"
+      enabled: yes
+      state: present
+      gpgcheck: no
+      baseurl: /dvd/AppStream
+  - name: BaseOS repo
+    yum_repository:
+      name: BaseOS
+      description: "BaseOS repo"
+      enabled: yes
+      state: present
+      gpgcheck: no
+      baseurl: /dvd/BaseOS
+  - name: Docker repo
+    yum_repository:
+      name: Docker
+      description: "Docker repo"
+      enabled: yes
+      state: present
+      gpgcheck: no
+      baseurl: "https://download.docker.com/linux/centos/7/x86_64/stable"
+  - name: Custom repo
+    yum_repository:
+        name: "{{ yum_name }}"
+        description: "custom repo"
+        enabled: yes 
+        state: "{{ yum_state }}"
+        gpgcheck: no
+        baseurl: "{{ yum_baseurl }}"

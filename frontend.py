@@ -11,14 +11,14 @@ import termcolor as tc
 import someFunctions as sf
 #initialise the colorama for use with termcolor
 init() 
-print(tc.colored("\t\t\t ***********************************", color='green', attrs=['blink']))
-print(tc.colored("\t\t\t *                                 *",color='green', attrs=['blink']))
+print(tc.colored("\t\t\t ***************************************", color='green', attrs=['blink']))
+print(tc.colored("\t\t\t *                                     *",color='green', attrs=['blink']))
 print(tc.colored("\t\t\t * ",color='green', attrs=['blink']), end='')
-print(tc.colored(" Radioactive", "green", on_color='on_white',attrs=['bold',]),end='')
-print(tc.colored(" Welcome To Sappy's python menu", "green", on_color='on_white',attrs=['bold',]),end='')
+print(tc.colored(" ", "green", on_color='on_white',attrs=['bold',]),end='')
+print(tc.colored("Welcome To Radioactive python menu", "green", on_color='on_white',attrs=['bold',]),end='')
 print(tc.colored(" *",color='green', attrs=['blink']))
-print(tc.colored("\t\t\t *                                 *",color='green', attrs=['blink']))
-print(tc.colored("\t\t\t ***********************************",color='green', attrs=['blink']))
+print(tc.colored("\t\t\t *                                     *",color='green', attrs=['blink']))
+print(tc.colored("\t\t\t ***************************************",color='green', attrs=['blink']))
 
 
 def display_menu():
@@ -33,15 +33,13 @@ def display_menu():
     5.  install a package
     6.  start, stop or reload a service
     7.  configure yum
-    8.  check hadoop status
-    9.  create a directory
-    10. create a user
-    11. execute a command in another system
-    12. Launch ec2-instance and configure webserver on top of it
-    13. Configure load balancer using haproxy
-    14. Setup hadoop master and worker nodes
-    15. Install docker on redhat
-    16. exit
+    8.  create a directory
+    9.  create a user
+    10. Launch ec2-instance and configure webserver on top of it
+    11. Configure load balancer using haproxy
+    12. Setup hadoop master and worker nodes
+    13. Install docker on redhat
+    14. exit
     '''
     print(tc.colored(menu, color='green', attrs=['bold']))
 if __name__ == '__main__':
@@ -73,13 +71,15 @@ if __name__ == '__main__':
             sf.install_pkg()
         elif ch == '6':
             sf.service()
-        elif ch == '9':
+        elif ch == '7':
+            sf.yum_config()
+        elif ch == '8':
             sf.create_dir()
-        elif ch == '10':
+        elif ch == '9':
             sf.create_user()
-        elif ch == '12':
+        elif ch == '10':
             sf.launch_ec2_instance()
-        elif ch == '14':
+        elif ch == '12':
             sf.hadoop()
         else:
             break
