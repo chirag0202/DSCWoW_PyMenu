@@ -1,0 +1,5 @@
+[webserver]
+{% for i in  x.instances %}
+{{ i.public_ip_address}} ansible_connection=ssh ansible_user=ec2-user
+{% endfor %}
+ 

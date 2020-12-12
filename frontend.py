@@ -37,7 +37,7 @@ def display_menu():
     9.  create a directory
     10. create a user
     11. execute a command in another system
-    12. Launch ec2-instance
+    12. Launch ec2-instance and configure webserver on top of it
     13. Configure load balancer using haproxy
     14. Setup hadoop master and worker nodes
     15. Install docker on redhat
@@ -77,7 +77,7 @@ if __name__ == '__main__':
             sf.create_dir()
         elif ch == '10':
             sf.create_user()
-        elif ch == '14'
-            sf.hadoop()
+        elif ch == '12':
+            sf.launch_ec2_instance()
         else:
             break
