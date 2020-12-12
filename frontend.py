@@ -73,5 +73,7 @@ if __name__ == '__main__':
             sf.install_pkg()
         elif ch == '6':
             sf.service()
+        elif ch == '10':
+            sf.create_user()
         else:
             break

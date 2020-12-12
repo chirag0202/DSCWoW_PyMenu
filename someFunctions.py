@@ -73,18 +73,18 @@ def install_pkg():
     pkg_name = input(tc.colored("Enter package name: ", color='green', attrs=['bold']))
     pkg_state = input(tc.colored("Enter package state(present/absent): ", color='green', attrs=['bold']))
     hosts_file = "[packs]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
-    with open("roles/install package/hosts", 'w') as file:
+    with open("playbooks/roles/install package/hosts", 'w') as file:
         file.write(hosts_file)
-    with open('roles/install package/pkg_name.yml', 'w') as var_file:
+    with open('playbooks/roles/install package/pkg_name.yml', 'w') as var_file:
         var_file.writelines("pkg_name: {0}".format(pkg_name))
         var_file.writelines("\n")
         var_file.writelines("pkg_state: {0}".format(pkg_state))
     
-    output = subprocess.run(['ansible-playbook', 'roles/install package/pkg.yml', '-i', 'roles/install package/hosts'])
+    output = subprocess.run(['ansible-playbook', 'playbooks/roles/install package/pkg.yml', '-i', 'playbooks/roles/install package/hosts'])
     if output.returncode == 0:
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
-        print(tc.colored("Task not completed successfully", color='green', attrs=['bold']))
+        print(tc.colored("Task failed!!!", color='red', attrs=['bold']))
 
 def service():
     """
@@ -106,20 +106,28 @@ def service():
     if output.returncode == 0:
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
-        print(tc.colored("Task not completed successfully", color='green', attrs=['bold']))
+        print(tc.colored("Task failed!!!", color='red', attrs=['bold']))
 def create_user():
     """
     This function will create a new user
     """
-    username= input("Enter username:")
-    passwd = input("Enter the password:")
-    output = subprocess.run(['useradd', username])
-    subprocess.run(['passwd', passwd])
-    if output.returncode == 1:
-        print("User not created")
+    host = input(tc.colored("Enter remote ip(leave blank for localhost): ", color='green', attrs=['bold']))
+    passwd = input(tc.colored("Enter root password: ", color='green', attrs=['bold']))
+    hosts_file = "[usr]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
+    username= input(tc.colored("Enter username: ", color='green', attrs=['bold']))
+    user_passwd = input(tc.colored("Enter the password: ", color='green', attrs=['bold']))
+    state = input(tc.colored('Enter user state(present/absent): ', color='green', attrs=['bold']))
+    with open('playbooks/roles/user/usr.yml', 'w') as user_file:
+        user_file.writelines("user_name: {0}\n".format(username))
+        user_file.writelines("user_passwd: {0}\n".format(user_passwd))
+        user_file.writelines("user_state: {0}\n".format(state))
+    with open('playbooks/roles/user/hosts', 'w') as file:
+        file.write(hosts_file)
+    output = subprocess.run(['ansible-playbook', 'playbooks/roles/user/user.yml', '-i', 'playbooks/roles/user/hosts'])
+    if output.returncode == 0:
+        print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
-        print("User created")
-
+        print(tc.colored("Task failed!!!", color='red', attrs=['bold']))
 def validIP(ip):
     """
     This function checks if an ip is valid or not
