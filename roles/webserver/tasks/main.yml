@@ -1,0 +1,20 @@
+---
+# tasks file for webserver
+
+- name: "Install Webserver"
+  package:
+          name: "httpd"
+          state: present
+  register: status
+
+- name: Webpage
+  template:
+    src: "index.html.j2"
+    dest: "/var/www/html/index.html"
+    mode: "0666"
+
+- name: "Start Webserver"
+  service:
+          name: httpd
+          state: started
+

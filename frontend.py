@@ -4,7 +4,6 @@ This is the frontend of our menu program
 #importing packages
 from colorama import init
 import termcolor as tc
-import play_sound as ps
 import someFunctions as sf
 #initialise the colorama for use with termcolor
 init() 
@@ -16,11 +15,6 @@ print(tc.colored(" *",color='green', attrs=['blink']))
 print(tc.colored("\t\t\t *                                 *",color='green', attrs=['blink']))
 print(tc.colored("\t\t\t ***********************************",color='green', attrs=['blink']))
 
-def playSound(key):
-    """
-    Play a sound when a key is pressed
-    """
-    ps.keyboardPress(key)
 def display_menu():
     """
     This function will display the menu to the user
@@ -31,16 +25,17 @@ def display_menu():
     3.  check webserver status
     4.  install webserver
     5.  install a package
-    6.  configure yum
-    7.  check hadoop status
-    8.  create a directory
-    9.  create a user
-    10. execute a command in another system
-    11. Launch ec2-instance
-    12. Configure load balancer using haproxy
-    13. Setup hadoop master and worker nodes
-    14. Install docker on redhat
-    15. exit
+    6.  start, stop or reload a service
+    7.  configure yum
+    8.  check hadoop status
+    9.  create a directory
+    10. create a user
+    11. execute a command in another system
+    12. Launch ec2-instance
+    13. Configure load balancer using haproxy
+    14. Setup hadoop master and worker nodes
+    15. Install docker on redhat
+    16. exit
     '''
     print(tc.colored(menu, color='green', attrs=['bold']))
 if __name__ == '__main__':
@@ -70,5 +65,7 @@ if __name__ == '__main__':
                 sf.webserver_install_remote(ip)
         elif ch == '5':
             sf.install_pkg()
+        elif ch == '6':
+            sf.service()
         else:
             break

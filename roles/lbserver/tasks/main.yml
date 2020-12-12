@@ -1,0 +1,21 @@
+---
+# tasks file for lbserver
+
+- name: Install Haproxy
+  package:
+          name: haproxy
+          state: present
+
+- name: Start Haproxy
+  service:
+          name: haproxy
+          state: started
+
+- name: Configure Haproxy
+  template:
+          src: haproxy.cfg
+          dest: "/etc/haproxy/haproxy.cfg"
+  notify: Restart the LoadBalancer
+
+
+

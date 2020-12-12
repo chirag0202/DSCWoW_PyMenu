@@ -1,0 +1,39 @@
+---
+#tasks file for ec2
+          - name: Create ec2 key
+            ec2_key:
+                    name: "key"
+                    region: "ap-south-1"
+                    aws_access_key: "AKIAUHSU6VIIMZN4LQGF"
+                    aws_secret_key: "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"
+            register: ec2_key
+          - name: Save the key in a file
+            copy: 
+              content: "{{ ec2_key.key.private_key }}"  
+              dest: "/keys/key.pem"  
+              mode: 0400
+            when: ec2_key.changed
+          - name: ec2 on aws
+            ec2:
+                    key_name: "key"
+                    instance_type: "t2.micro"
+                    image: "ami-0ebc1ac48dfd14136"
+                    wait: yes
+                    count: 1
+                    vpc_subnet_id: "subnet-3df9c355"
+                    instance_tags: {"Name":"Ansible"}
+                    assign_public_ip: yes
+                    region: "ap-south-1"
+                    state: present
+                    group_id: "sg-058677c48fa2f2f5b"
+                    aws_access_key: "{{ access_key }}"
+                    aws_secret_key: "{{ secret_key }}"
+            register: ec2
+          - name: Wait for Instance to launch
+            wait_for:
+                    host: "{{ item.public_ip }}"
+                    port: 22
+                    state: started
+            with_items: "{{ ec2.instances }}"
+          - name: "Refresh Inventory"
+            meta: refresh_inventory

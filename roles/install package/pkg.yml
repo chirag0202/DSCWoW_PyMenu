@@ -8,5 +8,5 @@
   - meta: refresh_inventory
   - package:
       state: "{{ pkg_state }}"
-      name: pkg_name
+      name: "{{ pkg_name }}"
       use: auto 
