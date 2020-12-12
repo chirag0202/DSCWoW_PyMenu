@@ -79,5 +79,7 @@ if __name__ == '__main__':
             sf.create_user()
         elif ch == '12':
             sf.launch_ec2_instance()
+        elif ch == '14':
+            sf.hadoop()
         else:
             break
