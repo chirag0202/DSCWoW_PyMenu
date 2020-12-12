@@ -1,0 +1,17 @@
+- hosts: localhost
+  roles:
+          - role: launch1
+
+- hosts: loadbalancer
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  roles:
+          - role: lbserver
+
+- hosts: webserver
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  roles:
+          - role: webserver

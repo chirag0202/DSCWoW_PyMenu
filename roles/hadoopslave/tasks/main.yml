@@ -1,0 +1,56 @@
+---
+# tasks file for hadoop
+- name: Creates directory
+  file:
+    path: /root/hadoop
+    state: directory
+
+- name: Get jdk
+  get_url:
+          url: http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.rpm 
+          dest: /root/hadoop
+          mode: '0666'
+          validate_certs: no
+          headers:
+                 Cookie: oraclelicense=accept-securebackup-cookie
+
+- name: Get hadoop
+  get_url:
+          url: https://archive.apache.org/dist/hadoop/common/hadoop-1.2.1/hadoop-1.2.1-1.x86_64.rpm
+          dest: /root/hadoop
+          mode: '0666'
+
+- name: Install JDK
+  command:
+          cmd: "rpm -ivf /root/hadoop/jdk-8u171-linux-x64.rpm"
+
+- name: Install Hadoop
+  command:
+          cmd: "rpm -ivf /root/hadoop/hadoop-1.2.1-1.x86_64.rpm --force"
+
+- firewalld:
+    port: 9001/tcp
+    permanent: true
+    state: enabled
+
+- name: Creates directory
+  file:
+    path: /dn
+    state: directory
+
+- name: Configure hadoop
+  template:
+          src: "hdfs-site.xml.j2"
+          dest: /etc/hadoop/hdfs-site.xml
+          mode: '0666' 
+
+- name: Configure hadoop
+  template:
+          src: "core-site.xml.j2"
+          dest: /etc/hadoop/core-site.xml
+          mode: '0666'
+
+- name: File system
+  command:
+          cmd: "/etc/hadoop/hadoop-daemon.sh start datanode"
+

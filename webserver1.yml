@@ -1,0 +1,16 @@
+- hosts: localhost
+  roles:
+          - role: launch
+
+- hosts: tag_Name_Ansible
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+
+  gather_facts: yes
+  pre_tasks:
+          - name: "install python"
+            raw: "sudo yum install python3 -y"
+  roles:
+          - role: webserver
+            port: 8080
