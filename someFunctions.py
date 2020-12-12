@@ -7,6 +7,12 @@ import termcolor as tc
 
 init()
 
+def hadoop()
+    """
+    This function uses ansible to create a hadoop filesystem
+    """
+    output = subprocess.run('ansible-playbook','playbooks/hadoop.yml')
+    print(output)
 def docker():
     """
     This function uses ansible to create a loadbalancer on AWS using haproxy

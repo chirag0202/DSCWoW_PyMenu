@@ -39,7 +39,13 @@
   template:
           src: "hdfs-site.xml.j2"
           dest: /etc/hadoop/hdfs-site.xml
-          mode: '0666' 
+          mode: '0666'
+
+- name: Configure hadoop
+  template:
+          src: "core-site.xml.j2"
+          dest: /etc/hadoop/core-site.xml
+          mode: '0666'
 
 - name: File system
   command:

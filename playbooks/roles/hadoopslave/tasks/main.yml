@@ -24,7 +24,8 @@
   command:
           cmd: "rpm -ivf /root/hadoop/hadoop-1.2.1-1.x86_64.rpm --force"
 
-- firewalld:
+- name: Firewall
+  firewalld:
     port: 9001/tcp
     permanent: true
     state: enabled
