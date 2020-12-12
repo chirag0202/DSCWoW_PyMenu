@@ -19,6 +19,4 @@ All the commands that would be required to be run the task shall be handled by t
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) setup in main system
 - [Boto 3](https://boto3.readthedocs.io/) in case of running AWS using WoWMenu
 - [Python3](https://www.python.org/download/releases/3.0/) installed
-
-
-
+## How to use?
