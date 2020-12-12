@@ -7,31 +7,32 @@ import termcolor as tc
 
 init()
 
-def hadoop()
+def hadoop():
     """
     This function uses ansible to create a hadoop filesystem
     """
-    output = subprocess.run('ansible-playbook','playbooks/hadoop.yml')
+    output = subprocess.run(['ansible-playbook','playbooks/hadoop.yml'])
     print(output)
+
 def docker():
     """
-    This function uses ansible to create a loadbalancer on AWS using haproxy
+    This function uses ansible ti install docker on the target node
     """
-    output = subprocess.run('ansible-playbook','playbooks/docker.yml')
+    output = subprocess.run(['ansible-playbook','playbooks/docker.yml'])
     print(output)
 
 def haproxy():
     """
     This function uses ansible to create a loadbalancer on AWS using haproxy
     """
-    output = subprocess.run('ansible-playbook','playbooks/haproxy.yml')
+    output = subprocess.run(['ansible-playbook','playbooks/haproxy.yml'])
     print(output)
 
 def webserver_aws():
     """
     This function uses ansible to create a loadbalancer on AWS using haproxy
     """
-    output = subprocess.run('ansible-playbook','playbooks/webserver.yml')
+    output = subprocess.run(['ansible-playbook','playbooks/webserver.yml'])
     print(output)
 
 def webserver_status():

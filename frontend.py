@@ -77,5 +77,7 @@ if __name__ == '__main__':
             sf.create_dir()
         elif ch == '10':
             sf.create_user()
+        elif ch == '14'
+            sf.hadoop()
         else:
             break
