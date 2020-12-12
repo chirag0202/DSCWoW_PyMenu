@@ -15,7 +15,7 @@
       instance_type: t2.micro 
       state: present
       tags: {"Purpose": "webserver"}
-      key_name: ansible
+      key_name: "{{ key_name }}"
       security_group: sg-03ef9242dfd8baf26
       region: ap-south-1
     register: x

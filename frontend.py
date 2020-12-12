@@ -81,5 +81,7 @@ if __name__ == '__main__':
             sf.launch_ec2_instance()
         elif ch == '12':
             sf.hadoop()
+        elif ch == '13':
+            sf.docker()
         else:
             break

@@ -17,10 +17,18 @@ def hadoop():
 
 def docker():
     """
-    This function uses ansible ti install docker on the target node
+    This function uses ansible to install docker on the target node 'playbooks/inventory/docker/hosts'
     """
-    output = subprocess.run(['ansible-playbook','playbooks/docker.yml'])
-    print(output)
+    host = input(tc.colored("Enter remote ip: ", color='green', attrs=['bold']))
+    passwd = gp.getpass(tc.colored("Enter root password: ", color='green', attrs=['bold']))
+    hosts_file = "[worker]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
+    with open("playbooks/inventory/docker/hosts", 'w') as file:
+        file.write(hosts_file)
+    output = subprocess.run(['ansible-playbook','playbooks/roles/docker/docker.yml', '-i', 'playbooks/inventory/docker/hosts'])
+    if output.returncode == 0:
+        print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
+    else:
+        print(tc.colored("Task failed!!!", color='red', attrs=['bold']))
 
 def haproxy():
     """
@@ -91,14 +99,14 @@ def install_pkg():
     pkg_name = input(tc.colored("Enter package name: ", color='green', attrs=['bold']))
     pkg_state = input(tc.colored("Enter package state(present/absent): ", color='green', attrs=['bold']))
     hosts_file = "[packs]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
-    with open("playbooks/roles/install package/hosts", 'w') as file:
+    with open("playbooks/inventory/install package/hosts", 'w') as file:
         file.write(hosts_file)
     with open('playbooks/roles/install package/pkg_name.yml', 'w') as var_file:
         var_file.writelines("pkg_name: {0}".format(pkg_name))
         var_file.writelines("\n")
         var_file.writelines("pkg_state: {0}".format(pkg_state))
     
-    output = subprocess.run(['ansible-playbook', 'playbooks/roles/install package/pkg.yml', '-i', 'playbooks/roles/install package/hosts'])
+    output = subprocess.run(['ansible-playbook', 'playbooks/roles/install package/pkg.yml', '-i', 'playbooks/inventory/install package/hosts'])
     if output.returncode == 0:
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
@@ -118,9 +126,9 @@ def service():
         svc_var.writelines("svc_name: {0}\n".format(svc_name))
         svc_var.writelines("svc_state: {0}\n".format(svc_state))
         svc_var.writelines("svc_enable: {0}\n".format(svc_enable))
-    with open("playbooks/roles/services/hosts", 'w') as file:
+    with open("playbooks/inventory/services/hosts", 'w') as file:
         file.write(hosts_file)
-    output = subprocess.run(['ansible-playbook', 'playbooks/roles/services/svc.yml', '-i', 'playbooks/roles/services/hosts'])
+    output = subprocess.run(['ansible-playbook', 'playbooks/roles/services/svc.yml', '-i', 'playbooks/inventory/services/hosts'])
     if output.returncode == 0:
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
@@ -140,9 +148,9 @@ def create_user():
         user_file.writelines("user_name: {0}\n".format(username))
         user_file.writelines("user_passwd: {0}\n".format(user_passwd))
         user_file.writelines("user_state: {0}\n".format(state))
-    with open('playbooks/roles/user/hosts', 'w') as file:
+    with open('playbooks/inventory/user/hosts', 'w') as file:
         file.write(hosts_file)
-    output = subprocess.run(['ansible-playbook', 'playbooks/roles/user/user.yml', '-i', 'playbooks/roles/user/hosts'])
+    output = subprocess.run(['ansible-playbook', 'playbooks/roles/user/user.yml', '-i', 'playbooks/inventory/user/hosts'])
     if output.returncode == 0:
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
@@ -192,7 +200,7 @@ def create_dir():
     host = input(tc.colored("Enter remote ip: ", color='green', attrs=['bold']))
     passwd = gp.getpass(tc.colored("Enter root password: ", color='green', attrs=['bold']))
     hosts_file = "[dir]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
-    with open('playbooks/roles/directory/hosts', 'w') as file:
+    with open('playbooks/inventory/directory/hosts', 'w') as file:
         file.write(hosts_file)
     dir_name = input(tc.colored("Enter path of directory: ", color='green', attrs=['bold']))
     dir_state = input(tc.colored("Enter state of directory: ", color='green', attrs=['bold']))
@@ -202,7 +210,7 @@ def create_dir():
             dir_var.writelines("dir_state: directory\n")
         else:
             dir_var.writelines("dir_state: {0}\n".format(dir_state))
-    output = subprocess.run(['ansible-playbook', 'playbooks/roles/directory/directory.yml', '-i', 'playbooks/roles/directory/hosts'])
+    output = subprocess.run(['ansible-playbook', 'playbooks/roles/directory/directory.yml', '-i', 'playbooks/inventory/directory/hosts'])
     if output.returncode == 0:
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
@@ -224,6 +232,8 @@ def launch_ec2_instance():
     key_name = input(tc.colored("Enter your ec2-instance key name: ", color='green', attrs=['bold']))
     copyfile('{0}.pem'.format(key_name), 'playbooks/roles/ec2-instance/{0}.pem'.format(key_name))
     subprocess.run(['chmod', '400', 'playbooks/roles/ec2-instance/{0}.pem'.format(key_name)])
+    with open('keys.yml', 'a') as file:
+        file.writelines("key_name: {0}".format(key_name))
     subprocess.run(['cp', 'keys.yml', 'playbooks/roles/ec2-instance/'])
     subprocess.run(['cp', 'index.html', 'playbooks/roles/ec2-instance/'])
     output = subprocess.run(['ansible-playbook', 'playbooks/roles/ec2-instance/aws-webserver.yml', '-i', 'playbooks/roles/ec2-instance/hosts', '--private-key', 'playbooks/roles/ec2-instance/{0}.pem'.format(key_name)])

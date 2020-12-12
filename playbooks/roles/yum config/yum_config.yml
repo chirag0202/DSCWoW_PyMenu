@@ -36,7 +36,7 @@
   - name: Docker repo
     yum_repository:
       name: Docker
-      description: "Docker repo"
+      description: Docker YUM repo
       enabled: yes
       state: present
       gpgcheck: no
