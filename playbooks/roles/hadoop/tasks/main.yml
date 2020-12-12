@@ -1,0 +1,51 @@
+---
+# tasks file for hadoop
+- name: Creates directory
+  file:
+    path: ./hadoop
+    state: directory
+
+- name: Get jdk
+  copy:
+          src: ./jdk-8u171-linux-x64.rpm
+          dest: ./hadoop/
+
+- name: Get hadoop
+  get_url:
+          url: https://archive.apache.org/dist/hadoop/common/hadoop-1.2.1/hadoop-1.2.1-1.x86_64.rpm
+          dest: ./hadoop
+          mode: '0666'
+
+- name: Install JDK
+  command:
+          cmd: "rpm -ivf /root/hadoop/jdk-8u171-linux-x64.rpm"
+
+- name: Install Hadoop
+  command:
+          cmd:  "rpm -ivf /root/hadoop/hadoop-1.2.1-1.x86_64.rpm --force"
+
+- name: Firewall
+  firewalld:
+    port: 9001/tcp
+    permanent: true
+    state: enabled
+
+- name: Creates directory
+  file:
+    path: /nn
+    state: directory
+
+- name: Configure hadoop
+  template:
+          src: "hdfs-site.xml.j2"
+          dest: /etc/hadoop/hdfs-site.xml
+          mode: '0666' 
+
+- name: File system
+  command:
+          cmd: "hadoop namenode -format -force"
+
+- name: File system
+  command:
+          cmd: "hadoop-daemon.sh start namenode"
+
