@@ -1,0 +1,94 @@
+---
+#tasks file for ec2
+          - name: Create ec2 key
+            ec2_key:
+                    name: "key"
+                    region: "ap-south-1"
+                    aws_access_key: "{{ access_key }}"
+                    aws_secret_key: "{{ secret_key }}"
+            register: ec2_key
+          - name: Save the key in a file
+            copy: 
+              content: "{{ ec2_key.key.private_key }}"  
+              dest: "/keys/key.pem"  
+              mode: 0400
+            when: ec2_key.changed
+          - name: ec2 vpc
+            ec2_vpc_net:
+                    aws_access_key: "{{ access_key }}"
+                    aws_secret_key: "{{ secret_key }}"
+                    region: "ap-south-1"
+                    name: "Webserver_vpc"
+                    state: present
+                    validate_certs: no
+                    cidr_block: 10.0.0.0/24
+            register: vpc1
+          - name: vpc subnet
+            ec2_vpc_subnet:
+                    aws_access_key: "{{ access_key }}"
+                    aws_secret_key: "{{ secret_key }}"
+                    state: present
+                    validate_certs: no
+                    cidr: 10.0.0.0/24
+                    region: "ap-south-1"
+                    wait: yes
+                    vpc_id: "{{ vpc1.vpc.id }}"
+            register: vpc_subnet
+          - name: ec2 group
+            ec2_group:
+                    name: example
+                    description: an example EC2 group
+                    vpc_id: "{{vpc1.vpc.id}}"
+                    region: "ap-south-1"
+                    aws_secret_key: "{{ secret_key }}"
+                    aws_access_key: "{{access_key}}"
+                    rules: 
+                      - proto: tcp
+                        from_port: 80
+                        to_port: 80
+                        cidr_ip: 0.0.0.0/0
+                      - proto: tcp
+                        from_port: 22
+                        to_port: 22
+                        cidr_ip: 0.0.0.0/0
+                    rules_egress:
+                      - proto: tcp
+                        from_port: 80
+                        to_port: 80
+                        cidr_ip: 0.0.0.0/0
+            register: sg
+          - name: ec2 on aws
+            ec2:
+                    key_name: "key"
+                    instance_type: "t2.micro"
+                    image: "ami-0ebc1ac48dfd14136"
+                    wait: yes
+                    count: 1
+                    group_id: "{{sg.group_id}}"
+                    vpc_subnet_id: "{{ vpc_subnet.subnet.id }}"
+                    instance_tags: {"Name":"Ansible"}
+                    assign_public_ip: yes
+                    state: present
+                    region: "{{ vpc_subnet.subnet.availability_zone }}"
+                    aws_access_key: "{{ access_key }}"
+                    aws_secret_key: "{{ secret_key }}"
+            register: ec2
+          - name: Wait for Instance to launch
+            wait_for:
+                    host: "{{ item.public_ip }}"
+                    port: 22
+                    state: started
+            with_items: "{{ ec2.instances }}"
+          - name: Update hosts file
+            template:
+              src: hosts.j2
+              dest: hosts
+          - name: Copy updated hosts file
+            copy:
+              dest: /etc/ansible/hosts
+              src: hosts
+          - name: "Refresh Inventory"
+            meta: refresh_inventory
+          - name: "Pause execution for 30 seconds"
+            pause: 
+                    seconds: '30'
