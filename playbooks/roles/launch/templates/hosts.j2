@@ -41,14 +41,8 @@
 # leading 0s:
 
 #db-[99:101]-node.example.com
-
-[loadbalancer]
-{% for i in  ec21.instances %}
-{{ i.public_ip_address}} ansible_connection=ssh ansible_user=ec2-user
-{% endfor %}
-
 [webserver]
-{% for i in  ec22.instances %}
+{% for i in  ec2.instances %}
 {{ i.public_ip_address}} ansible_connection=ssh ansible_user=ec2-user
 {% endfor %}
  
