@@ -1,0 +1,13 @@
+---
+- name: create directory
+  hosts: dir
+  become: yes
+  become_user: root
+  vars_files:
+    - dir.yml
+  tasks:
+    - name: refresh inventory
+      meta: refresh_inventory
+    - file:
+        path: "{{ dir_path }}"
+        state: "{{ dir_state }}"
