@@ -96,13 +96,13 @@ def service():
     svc_state= input(tc.colored("Enter service state(started/stopped/restarted): ", color='green', attrs=['bold']))
     svc_enable = input(tc.colored("Wether service should be enabled(True/False): ", color='green', attrs=['bold']))
     hosts_file = "[svcs]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
-    with open("roles/services/svcs_name.yml", 'w') as svc_var:
+    with open("playbooks/roles/services/svcs_name.yml", 'w') as svc_var:
         svc_var.writelines("svc_name: {0}\n".format(svc_name))
         svc_var.writelines("svc_state: {0}\n".format(svc_state))
         svc_var.writelines("svc_enable: {0}\n".format(svc_enable))
-    with open("roles/services/hosts", 'w') as file:
+    with open("playbooks/roles/services/hosts", 'w') as file:
         file.write(hosts_file)
-    output = subprocess.run(['ansible-playbook', 'roles/services/svc.yml', '-i', 'roles/services/hosts'])
+    output = subprocess.run(['ansible-playbook', 'playbooks/roles/services/svc.yml', '-i', 'playbooks/roles/services/hosts'])
     if output.returncode == 0:
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
@@ -164,7 +164,29 @@ def execAnother():
         else:
             print("Command is unsucessfull")
             print("Error code: ", output.returncode)
-
+def create_dir():
+    """
+    This function creates a directory
+    """
+    host = input(tc.colored("Enter remote ip(leave blank for localhost): ", color='green', attrs=['bold']))
+    passwd = input(tc.colored("Enter root password: ", color='green', attrs=['bold']))
+    hosts_file = "[dir]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
+    with open('playbooks/roles/directory/hosts', 'w') as file:
+        file.write(hosts_file)
+    dir_name = input(tc.colored("Enter path of directory: ", color='green', attrs=['bold']))
+    dir_state = input(tc.colored("Enter state of directory: ", color='green', attrs=['bold']))
+    with open("playbooks/roles/directory/dir.yml", 'w') as dir_var:
+        dir_var.writelines("dir_path: {0}\n".format(dir_name))
+        if dir_state == 'present':
+            dir_var.writelines("dir_state: directory\n")
+        else:
+            dir_var.writelines("dir_state: {0}\n".format(dir_state))
+    output = subprocess.run(['ansible-playbook', 'playbooks/roles/directory/directory.yml', '-i', 'playbooks/roles/directory/hosts'])
+    if output.returncode == 0:
+        print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
+    else:
+        print(tc.colored("Task failed!!!", color='red', attrs=['bold']))
+        
 if __name__ == "__main__":
     #run the functions for checking
     #to check a function uncomment and see if it works or not
