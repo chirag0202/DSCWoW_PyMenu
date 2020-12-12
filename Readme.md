@@ -20,3 +20,5 @@ All the commands that would be required to be run the task shall be handled by t
 - [Boto 3](https://boto3.readthedocs.io/) in case of running AWS using WoWMenu
 - [Python3](https://www.python.org/download/releases/3.0/) installed
 ## How to use?
+1. Clone this repository using the command `git clone https://github.com/chirag0202/DSCWoW_WoWMenu.git`
+
