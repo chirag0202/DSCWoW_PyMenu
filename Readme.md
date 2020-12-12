@@ -33,5 +33,9 @@ Let's have a quick glance to the frontend of the program...
 
 <img src="https://raw.githubusercontent.com/SaranyaChattopadhyay/Flutter-pictures/master/1.jpeg" height="400" width="600">
 
+The program at work...
+
+<img src="https://raw.githubusercontent.com/SaranyaChattopadhyay/Flutter-pictures/master/2.jpeg" height="400" width="600">
+
 ## Demo
 As the demo, a powerpoint presentation describing the basics of the project along with a demo-video on the working prototype have been uploaded. Do have a look on them!
