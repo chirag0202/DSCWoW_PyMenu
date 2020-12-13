@@ -10,7 +10,7 @@
       meta: refresh_inventory
     - name: Create user
       user:
-          name: "{{ user_name }}" # required. Name of the user to create, remove or modify.
+          name: "{{ user_name }}" 
           create_home: yes
           password: "{{ user_passwd | password_hash('sha512') }}"
           state: "{{ user_state }}"
