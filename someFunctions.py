@@ -12,8 +12,24 @@ def hadoop():
     """
     This function uses ansible to create a hadoop filesystem
     """
-    output = subprocess.run(['ansible-playbook','playbooks/hadoop.yml'])
-    print(output)
+    host = input(tc.colored("Enter remote ip(namenode): ", color='green', attrs=['bold']))
+    passwd = gp.getpass(tc.colored("Enter root password: ", color='green', attrs=['bold']))
+    hosts_file = "[hadoop]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
+    with open("playbooks/inventory/hadoop/hosts", 'w') as file:
+        file.write(hosts_file)
+    host = input(tc.colored("Enter remote ip(datanode): ", color='green', attrs=['bold']))
+    passwd = gp.getpass(tc.colored("Enter root password: ", color='green', attrs=['bold']))
+    host = host.split()
+    hosts_file = "[hadoopslave]"
+    for hosts in host:
+        hosts_file + "\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(hosts, passwd)
+    with open("playbooks/inventory/hadoop/hosts", 'a') as file:
+        file.write(hosts_file)
+    output = subprocess.run(['ansible-playbook','playbooks/hadoop.yml', '-i', 'playbooks/inventory/hadoop'])
+    if output.returncode == 0:
+        print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
+    else:
+        print(tc.colored("Task failed!!!", color='red', attrs=['bold']))
 
 def docker():
     """

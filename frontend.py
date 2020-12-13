@@ -11,14 +11,14 @@ import termcolor as tc
 import someFunctions as sf
 #initialise the colorama for use with termcolor
 init() 
-print(tc.colored("\t\t\t ***************************************", color='green', attrs=['blink']))
-print(tc.colored("\t\t\t *                                     *",color='green', attrs=['blink']))
-print(tc.colored("\t\t\t * ",color='green', attrs=['blink']), end='')
+print(tc.colored("\t\t\t\t************************", color='green', attrs=['blink']))
+print(tc.colored("\t\t\t\t*                      *",color='green', attrs=['blink']))
+print(tc.colored("\t\t\t\t* ",color='green', attrs=['blink']), end='')
 print(tc.colored(" ", "green", on_color='on_white',attrs=['bold',]),end='')
-print(tc.colored("Welcome To Radioactive python menu", "green", on_color='on_white',attrs=['bold',]),end='')
+print(tc.colored("Welcome To WoW Menu", "green", on_color='on_white',attrs=['bold',]),end='')
 print(tc.colored(" *",color='green', attrs=['blink']))
-print(tc.colored("\t\t\t *                                     *",color='green', attrs=['blink']))
-print(tc.colored("\t\t\t ***************************************",color='green', attrs=['blink']))
+print(tc.colored("\t\t\t\t*                      *",color='green', attrs=['blink']))
+print(tc.colored("\t\t\t\t*************************",color='green', attrs=['blink']))
 
 
 def display_menu():
@@ -83,5 +83,8 @@ if __name__ == '__main__':
             sf.hadoop()
         elif ch == '13':
             sf.docker()
-        else:
+        elif ch == '14':
+            print(tc.colored("See you next time :)", color='green', attrs=['bold']))
             break
+        else:
+            print(tc.colored("Wrong Input!!!", color='red', attrs=['bold']))
