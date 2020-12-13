@@ -36,10 +36,9 @@ def display_menu():
     8.  create a directory
     9.  create a user
     10. Launch ec2-instance and configure webserver on top of it
-    11. Configure load balancer using haproxy
-    12. Setup hadoop master and worker nodes
-    13. Install docker on redhat
-    14. exit
+    11. Setup hadoop master and worker nodes
+    12. Install docker on redhat
+    13. exit
     '''
     print(tc.colored(menu, color='green', attrs=['bold']))
 if __name__ == '__main__':
@@ -79,11 +78,11 @@ if __name__ == '__main__':
             sf.create_user()
         elif ch == '10':
             sf.launch_ec2_instance()
-        elif ch == '12':
+        elif ch == '11':
             sf.hadoop()
-        elif ch == '13':
+        elif ch == '12':
             sf.docker()
-        elif ch == '14':
+        elif ch == '13':
             print(tc.colored("See you next time :)", color='green', attrs=['bold']))
             break
         else:
