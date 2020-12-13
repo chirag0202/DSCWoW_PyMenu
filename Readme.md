@@ -36,7 +36,7 @@ The user has to select the task of choice from the list and give the prompted in
 
 Let's have a quick glance to the frontend of the program...
 
-<img src="https://raw.githubusercontent.com/SaranyaChattopadhyay/Flutter-pictures/master/1.jpeg" height="400" width="600">
+<img src="https://raw.githubusercontent.com/SaranyaChattopadhyay/Flutter-pictures/master/frontend.jpeg" height="400" width="600">
 
 The program at work...
 

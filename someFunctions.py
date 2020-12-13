@@ -14,7 +14,7 @@ def hadoop():
     """
     host = input(tc.colored("Enter remote ip(namenode): ", color='green', attrs=['bold']))
     passwd = gp.getpass(tc.colored("Enter root password: ", color='green', attrs=['bold']))
-    hosts_file = "[hadoop]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(host, passwd)
+    hosts_file = "[hadoop]\n{0} ansible_connection=ssh ansible_user=root ansible_password={1} \n".format(host, passwd)
     with open("playbooks/inventory/hadoop/hosts", 'w') as file:
         file.write(hosts_file)
     host = input(tc.colored("Enter remote ip(datanode): ", color='green', attrs=['bold']))
@@ -22,10 +22,10 @@ def hadoop():
     host = host.split()
     hosts_file = "[hadoopslave]"
     for hosts in host:
-        hosts_file + "\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(hosts, passwd)
+        hosts_file=hosts_file + "\n{0} ansible_connection=ssh ansible_user=root ansible_password={1}".format(hosts, passwd)
     with open("playbooks/inventory/hadoop/hosts", 'a') as file:
         file.write(hosts_file)
-    output = subprocess.run(['ansible-playbook','playbooks/hadoop.yml', '-i', 'playbooks/inventory/hadoop'])
+    output = subprocess.run(['ansible-playbook','-i','playbooks/inventory/hadoop/','playbooks/hadoop.yml'])
     if output.returncode == 0:
         print(tc.colored("Task completed successfully", color='green', attrs=['bold']))
     else:
