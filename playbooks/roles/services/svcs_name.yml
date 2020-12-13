@@ -1,3 +1,0 @@
-svc_name: httpd
-svc_state: started
-svc_enable: true
