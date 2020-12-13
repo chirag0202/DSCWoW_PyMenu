@@ -93,7 +93,7 @@ def webserver_install_remote(ip):
     """
     Install webserver on remote ip
     """
-    output = subprocess.run(['ssh', ip, 'yum', 'install', 'httpd', '-y', '&&', 'systemctl', 'start', 'httpd'], capture_output=True)
+    output = subprocess.run(['ssh', f'root@{ip}', 'yum', 'install', 'httpd', '-y', '&&', 'systemctl', 'start', 'httpd'], capture_output=True)
     if output.returncode == 1:
         print("httpd not installed")
     else:
@@ -241,8 +241,6 @@ def launch_ec2_instance():
     key_name = input(tc.colored("Enter your ec2-instance key name: ", color='green', attrs=['bold']))
     copyfile('{0}.pem'.format(key_name), 'playbooks/roles/ec2-instance/{0}.pem'.format(key_name))
     subprocess.run(['chmod', '400', 'playbooks/roles/ec2-instance/{0}.pem'.format(key_name)])
-    with open('keys.yml', 'a') as file:
-        file.writelines("key_name: {0}".format(key_name))
     subprocess.run(['cp', 'keys.yml', 'playbooks/roles/ec2-instance/'])
     subprocess.run(['cp', 'index.html', 'playbooks/roles/ec2-instance/'])
     output = subprocess.run(['ansible-playbook', 'playbooks/roles/ec2-instance/aws-webserver.yml', '-i', 'playbooks/roles/ec2-instance/hosts', '--private-key', 'playbooks/roles/ec2-instance/{0}.pem'.format(key_name)])
